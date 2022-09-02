@@ -9,11 +9,10 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>{% block title %}Главная{% endblock %} - Доска объявлений</title>
-<title>без имени</title>
 {% bootstrap_css %}
 <link rel="stylesheet" type="text/css" 
 href=" {% static 'main/style.css' %}">
-{% bootstrap_javascript] %}
+
 </head>
 
 <body class="container-fluid">
@@ -48,12 +47,12 @@ href=" {% static 'main/style.css' %}">
     <div class="row">
         <nav class="col-md-auto nav flex-column border">
             <a class="nav-link root"
-            href="{% url ’main:index' %}">Главная</а>
+            href="{% url 'main:index' %}">Главная</a>
             <span class="nav-link root font-weight-bold">
             Heдвижимость </span>
             <a class="nav-link" href="#">Жилье</a>
-            <a class="nav-link" href="#">Склады</а>
-            <a class="nav-link" href="#">Гаражи</а>
+            <a class="nav-link" href="#">Склады</a>
+            <a class="nav-link" href="#">Гаражи</a>
             <span class="nav-link root font-weight-bold" href="#">
             Транспорт</span>
             <a class="nav-link" href="#">Легковой</a>
@@ -68,6 +67,8 @@ href=" {% static 'main/style.css' %}">
     <footer class="mt-3">
         <p class="text-right font-italic">&copy; читатели.</p>
     </footer>
+    
+{% bootstrap_javascript %}
 </body>
 
 </html>
