@@ -57,6 +57,8 @@ href=" {% static 'main/style.css' %}">
             Транспорт</span>
             <a class="nav-link" href="#">Легковой</a>
             <a class="nav-link" href="#">Грузовой</a>
+            <a class="nav-link root" 
+            href="{% url 'main:other' page='about' %}">О сайте</a>
         </nav>
         <section class="col border py-2">
             {% bootstrap_messages %}
