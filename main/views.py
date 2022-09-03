@@ -3,7 +3,8 @@ from django.http import HttpResponse, Http404
 from django.template import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import UpdateView
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, \
         PasswordChangeView
@@ -11,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import AdvUser
-from .forms import ChangeUserInfoForm
+from .forms import ChangeUserInfoForm, RegisterUserForm
 
 def index(request):
     return render(request, 'main/index.html')
@@ -23,6 +24,10 @@ def other_page(request, page):
     except TemplateDoesNotExist:
         raise Http404
     return HttpResponse(template.render(request=request))
+    
+@login_required
+def profile(request):
+    return render(request, 'main/profile.html')
     
 class BBLoginView(LoginView):
     template_name = 'main/login.html'
@@ -42,10 +47,6 @@ class ChangeUserInfo(SuccessMessageMixin, UpdateView):
         if not queryset:
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
-
-@login_required
-def profile(request):
-    return render(request, 'main/profile.html')
     
 class BBLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'main/logout.html'
@@ -55,3 +56,12 @@ class BBPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
     template_name = 'main/change_password.html'
     success_url = reverse_lazy('main:profile')
     success_message = 'Пароль пользователя изменён'
+    
+class RegisterUserView(CreateView):
+    model = AdvUser
+    template_name = 'main/register_user.html'
+    form_class = RegisterUserForm
+    success_url = reverse_lazy('main:register_done')
+    
+class RegisterDoneView(TemplateView):
+    template_name = 'main/register_done.html'
