@@ -6,7 +6,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<p></p>
+<p>Вы уже выполнили вход</p>
 {% else %}
 <form method="post">
     {% csrf_token %}
