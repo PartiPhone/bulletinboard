@@ -23,6 +23,7 @@ href=" {% static 'main/style.css' %}">
         <ul class="col nav justify-content-end border">
            <li class="nav-item"><a class="nav-link"
             href="#">Регистрация</a></li>
+            {% if user.is_authenticated %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
@@ -40,8 +41,10 @@ href=" {% static 'main/style.css' %}">
                     <a class="dropdown-item" href="#">Удалить</a>
                 </div>
             </li>
+            {% else %}
             <li class="nav-item"><a class="nav-link"
-            href="#">Вход</a></li>
+            href="{% url 'main:login' %}">Вход</a></li>
+            {% endif %}
         </ul>
     </div>
     <div class="row">
