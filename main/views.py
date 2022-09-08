@@ -24,6 +24,9 @@ from .utilities import signer
 def index(request):
     return render(request, 'main/index.html')
     
+def by_rubric(request, pk):
+    pass
+    
 def other_page(request, page):
     try:
         print(page)

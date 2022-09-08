@@ -1,8 +1,9 @@
 from django.contrib import admin
 import datetime
 
-from .models import AdvUser 
+from .models import AdvUser, SuperRubric, SubRubric
 from .utilities import send_activation_notification
+from .forms import SubRubricForm
 
 def send_activation_notifications(modeladmin, request, queryset):
     for rec in queryset:
@@ -16,6 +17,7 @@ class NonactivatedFilter(admin.SimpleListFilter):
     title = 'Прошел активацию?'
     parameter_name = 'actstate'
     
+    # TODO: Исправить фильтрацию
     def lookups(self, request, model_admin):
         return {
             ('activated', 'Прошли'),
@@ -48,6 +50,17 @@ class AdvUserAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('last_login', 'date_joined')
     actions = (send_activation_notifications,)
+    
+class SubRubricInline(admin.TabularInline):
+    model = SubRubric
+    
+class SuperRubricAdmin(admin.ModelAdmin):
+    exclude = ('super_rubric',)
+    inlines = (SubRubricInline,)
 
+class SubRubricAdmin(admin.ModelAdmin):
+    form = SubRubricForm
 
+admin.site.register(SuperRubric, SuperRubricAdmin)
+admin.site.register(SubRubric, SubRubricAdmin)
 admin.site.register(AdvUser, AdvUserAdmin)
