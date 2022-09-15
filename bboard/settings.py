@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django_cleanup',
     'easy_thumbnails',
+    'captcha',
     'main.apps.MainConfig',
 ]
 

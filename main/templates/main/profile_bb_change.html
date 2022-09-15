@@ -2,13 +2,14 @@
 
 {% load bootstrap5 %}
 
-{% block title %} Смена пароля {% endblock %}
+{% block title %} Редактирование объявления {% endblock %}
 
 {% block content %}
-<h2>Смена пароля пользователя  {{ user.username }}</h2>
+<h2>Редактирование объявления </h2>
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form layout='horizontal' %}
+    {% bootstrap_formset formset layout='horizontal' %}
     {% buttons submit='Изменить' %}{% endbuttons %}
 </form>
 {% endblock %}
