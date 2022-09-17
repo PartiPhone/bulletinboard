@@ -2,4 +2,6 @@ main/migrations/
 manage.py
 bboard/__pycache__/
 main/__pycache__/
+api/migrations/
+api/__pycache__/
 
