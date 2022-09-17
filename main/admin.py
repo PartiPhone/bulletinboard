@@ -1,7 +1,8 @@
 from django.contrib import admin
 import datetime
 
-from .models import AdvUser, SuperRubric, SubRubric, Bb, AdditionalImage
+from .models import AdvUser, SuperRubric, SubRubric, Bb, AdditionalImage, \
+                    Comment
 from .utilities import send_activation_notification
 from .forms import SubRubricForm
 
@@ -21,7 +22,7 @@ class NonactivatedFilter(admin.SimpleListFilter):
     def lookups(self, request, model_admin):
         return {
             ('activated', 'Прошли'),
-            ('threeedays', 'не прошли более 3 дней'),
+            ('threeedays', 'Не прошли более 3 дней'),
             ('week', 'Не прошли более недели'),
         }
     
@@ -69,7 +70,11 @@ class BbAdmin(admin.ModelAdmin):
     fields = (('rubric', 'author'), 'title', 'content', 'price',
                 'contacts', 'image', 'is_active')
     inlines = (AdditionalImageInline,)
+    
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('bb', 'author', 'content', 'is_active', 'created_at')
 
+admin.site.register(Comment, CommentAdmin)
 admin.site.register(Bb, BbAdmin)
 admin.site.register(SuperRubric, SuperRubricAdmin)
 admin.site.register(SubRubric, SubRubricAdmin)

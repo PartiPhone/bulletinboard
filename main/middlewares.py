@@ -16,5 +16,5 @@ def bboard_context_processor(request):
             if context['all']:
                 context['all'] += '&page=' + page
             else:
-                context['all'] += '?page' + page
+                context['all'] += '?page=' + page
     return context
