@@ -13,7 +13,19 @@ class BbDetailSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'content', 'price', 'created_at',
                     'contacts', 'image')
                     
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Comment
-        fields = ('bb', 'content', 'author', 'created_at')
+        fields = ('url', 'content', 'author', 'created_at')
+        
+class BbSerializer(serializers.HyperlinkedModelSerializer):
+    comment_set = serializers.HyperlinkedRelatedField(many=True, 
+                view_name='comment-detail', read_only=True)
+    
+    class Meta:
+        model = Bb
+        fields = ('url', 'title', 'content', 'price', 'created_at',
+                    'contacts', 'image', 'comment_set')
+
+
+        

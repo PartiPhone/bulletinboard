@@ -18,6 +18,7 @@ class AdvUser(AbstractUser):
     class Meta(AbstractUser.Meta):
         pass
 
+# Базовая модель рубрик
 class Rubric(models.Model):
     name = models.CharField(max_length=20, db_index=True, unique=True,
                             verbose_name='Название')
@@ -27,10 +28,12 @@ class Rubric(models.Model):
                     on_delete=models.PROTECT, null=True, blank=True,
                     verbose_name='Надрубрика')
                     
+# Диспетчер записи надрубрик
 class SuperRubricManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(super_rubric__isnull=True)
         
+# Модель надрубрик
 class SuperRubric(Rubric):
     objects = SuperRubricManager()
     
@@ -43,10 +46,12 @@ class SuperRubric(Rubric):
         verbose_name = 'Надрубрика'
         verbose_name_plural = 'Надрубрики'
         
+# Диспетчер записи подрубрик
 class SubRubricManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(super_rubric__isnull=False)
 
+# Модель подрубрик
 class SubRubric(Rubric):
     objects = SubRubricManager()
         

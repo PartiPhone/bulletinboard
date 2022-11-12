@@ -13,6 +13,8 @@ def send_activation_notification(user):
         host = 'http://' + ALLOWED_HOSTS[0]
     else:
         host = 'http://localhost:8000'
+    # sign - значение уникально идентифицирующее 
+    # только что зарегистрированного пользователя
     context = {'user': user, 'host': host, 
                     'sign': signer.sign(user.username)}
     subject = render_to_string('email/activation_letter_subject.txt',
@@ -20,9 +22,9 @@ def send_activation_notification(user):
 
     body_text = render_to_string('email/activation_letter_body.txt',
                                     context)
-    user.email_user(f'Активация пользователя { user.username }', body_text)
+    user.email_user(subject, body_text)
 
-def get_timestamp_path(insrance, filename):
+def get_timestamp_path(instance, filename):
     return f'{datetime.now()}{splitext(filename)[1]}'
 
 def send_new_comment_notification(comment):

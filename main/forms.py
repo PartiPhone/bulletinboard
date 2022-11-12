@@ -9,6 +9,7 @@ from .apps import user_registered
 from .models import AdvUser, SuperRubric, SubRubric, Bb, AdditionalImage, \
                     Comment
 
+# Форма для правки основных сведений пользователя
 class ChangeUserInfoForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
     
@@ -17,6 +18,7 @@ class ChangeUserInfoForm(forms.ModelForm):
         fields = ['username', 'email', 'first_name', 'last_name', 
                 'send_messages']
 
+# Форма для занесения сведений о новом пользователе
 class RegisterUserForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
     password1 = forms.CharField(label='Пароль', 
@@ -34,7 +36,6 @@ class RegisterUserForm(forms.ModelForm):
     
     def clean(self):
         super().clean()
-        print(self.cleaned_data)
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
         if password1 != password2:
@@ -46,12 +47,12 @@ class RegisterUserForm(forms.ModelForm):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         user.is_active = False
+        # Признак прошел ли пользователь активацию
         user.is_activated = False
-        print('lol')
         if commit:
             user.save()
+        # Сигнал для отправки письма с требованием активации
         user_registered.send(RegisterUserForm, instance=user)
-        print('lol')
         return user
             
     class Meta:

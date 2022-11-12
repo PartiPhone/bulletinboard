@@ -14,6 +14,7 @@ def send_activation_notifications(modeladmin, request, queryset):
 send_activation_notifications.short_description = \
     'Отправка писем с требованием активации'
     
+# Фильтр по статусу прохождения активации пользователя
 class NonactivatedFilter(admin.SimpleListFilter):
     title = 'Прошел активацию?'
     parameter_name = 'actstate'
@@ -35,10 +36,11 @@ class NonactivatedFilter(admin.SimpleListFilter):
             return queryset.filter(is_active=False, is_activated=False,
                                     date_joined__date__lt=d)
         elif val == 'week':
-            d = datetime.date.today() - datetime.timedelta(days=1)
+            d = datetime.date.today() - datetime.timedelta(days=7)
             return queryset.filter(is_active=False, is_activated=False,
                                     date_joined__date__lt=d)
 
+# Администрирование пользователей
 class AdvUserAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'is_activated', )
     search_fields = ('username', 'email', 'first_name', 'last_name')
@@ -52,6 +54,7 @@ class AdvUserAdmin(admin.ModelAdmin):
     readonly_fields = ('last_login', 'date_joined')
     actions = (send_activation_notifications,)
     
+# Встроенный редактор подрубрик
 class SubRubricInline(admin.TabularInline):
     model = SubRubric
     

@@ -90,6 +90,7 @@ def other_page(request, page):
         raise Http404
     return HttpResponse(template.render(request=request))
     
+# Веб-страница профиля
 @login_required
 def profile(request):
     bbs = Bb.objects.filter(author=request.user.pk)
@@ -145,6 +146,7 @@ def profile_bb_delete(request, pk):
         context = {'bb': bb}
         return render(request, 'main/profile_bb_delete.html', context)
     
+# Активация пользователя
 def user_activate(request, sign):
     try:
         username = signer.unsign(sign)
@@ -160,17 +162,21 @@ def user_activate(request, sign):
         user.save()
     return render(request, template)
     
+# Веб-страница входа
 class BBLoginView(LoginView):
     template_name = 'main/login.html'
     
-class ChangeUserInfo(SuccessMessageMixin, UpdateView):
+# Веб-страница правки личных данных пользователя
+class ChangeUserInfo(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = AdvUser
     template_name = 'main/change_user_info.html'
     form_class = ChangeUserInfoForm
     success_url = reverse_lazy('main:profile')
     success_message = 'Данные пользователя изменены'
     
+    # Метод setup() выполняется в самом начале исполнения контроллера класса
     def setup(self, request, *args, **kwargs):
+        # Извлекаем ключ пользователя и сохраняем его в атрибуте
         self.user_id = request.user.pk
         return super().setup(request, *args, **kwargs)
     
@@ -179,24 +185,29 @@ class ChangeUserInfo(SuccessMessageMixin, UpdateView):
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
     
+# Веб-страница выхода
 class BBLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'main/logout.html'
 
+# Веб-страница смены пароля
 class BBPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
                                 PasswordChangeView):
     template_name = 'main/change_password.html'
     success_url = reverse_lazy('main:profile')
     success_message = 'Пароль пользователя изменён'
     
+# Регистрация пользователя
 class RegisterUserView(CreateView):
     model = AdvUser
     template_name = 'main/register_user.html'
     form_class = RegisterUserForm
     success_url = reverse_lazy('main:register_done')
     
+# Уведомление об успешной регистрации
 class RegisterDoneView(TemplateView):
     template_name = 'main/register_done.html'
 
+# Веб-страница удаления пользователя
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     model = AdvUser
     template_name = 'main/delete_user.html'
@@ -217,18 +228,22 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
             queryset = self.get_queryset()
             return get_object_or_404(queryset, pk=self.user_id)
 
+# Отправка письма для сброса пароля
 class UserPasswordResetView(PasswordResetView):
     template_name = 'main/password_reset_email.html'
     subject_template_name = 'email/reset_subject.txt'
     email_template_name = 'email/reset_email.txt'
     success_url = reverse_lazy('main:password_reset_done')
     
+# Уведомление об отправке письма для сброса пароля 
 class UserPasswordResetDoneView(PasswordResetDoneView):
     template_name = 'main/password_reset_done.html'
     
+# Форма сброса пароля
 class UserPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = 'main/password_reset.html'
     success_url = reverse_lazy('main:password_reset_complete')
     
+# Уведомление об успешном сбросе пароля
 class UserPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'main/password_reset_complete.html'
