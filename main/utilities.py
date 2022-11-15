@@ -25,7 +25,7 @@ def send_activation_notification(user):
     user.email_user(subject, body_text)
 
 def get_timestamp_path(instance, filename):
-    return f'{datetime.now()}{splitext(filename)[1]}'
+    return f'{datetime.now().timestamp()}{splitext(filename)[1]}'
 
 def send_new_comment_notification(comment):
     if ALLOWED_HOSTS:

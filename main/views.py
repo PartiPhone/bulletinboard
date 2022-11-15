@@ -29,6 +29,7 @@ def index(request):
     context = {'bbs': bbs}
     return render(request, 'main/index.html', context)
     
+# Веб-страница сведений о выбранном объявлении
 def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
     ais = bb.additionalimage_set.all()
@@ -53,6 +54,7 @@ def detail(request, rubric_pk, pk):
     context = {'bb': bb, 'ais': ais, 'comments': comments, 'form': form}
     return render(request, 'main/detail.html', context)
 
+# Административная страница сведений об объявлении
 @login_required
 def profile_bb_detail(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
@@ -97,6 +99,7 @@ def profile(request):
     context = {'bbs': bbs}
     return render(request, 'main/profile.html', context)
     
+# Добавление объявления
 @login_required
 def profile_bb_add(request):
     if request.method == 'POST':
@@ -115,6 +118,7 @@ def profile_bb_add(request):
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_add.html', context)
     
+# Правка объявления
 @login_required
 def profile_bb_change(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
@@ -134,6 +138,7 @@ def profile_bb_change(request, pk):
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_change.html', context)
     
+# Удаление объявления
 @login_required
 def profile_bb_delete(request, pk):
     bb = get_object_or_404(Bb, pk=pk)

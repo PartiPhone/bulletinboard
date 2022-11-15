@@ -101,6 +101,7 @@ class AdditionalImage(models.Model):
         verbose_name = 'Дополнительная иллюстрация'
         verbose_name_plural = 'Дополнительные иллюстрации'
 
+# Модель комментирования объявления
 class Comment(models.Model):
     bb = models.ForeignKey(Bb, on_delete=models.CASCADE, 
                             verbose_name='Объявление')
