@@ -20,14 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv('token')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-# ALLOWED_HOSTS.append('http://127.0.0.1:1337')
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:1337', 'http://*.localhost']
+ALLOWED_HOSTS = ['127.0.0.1']
+
 
 # Application definition
 
@@ -87,12 +86,12 @@ WSGI_APPLICATION = 'bboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get("SQL_ENGINE"),
-        'NAME': os.environ.get("SQL_DATABASE"),
-        'USER': os.environ.get("SQL_USER"),
-        'PASSWORD': os.environ.get("SQL_PASSWORD"),
-        'HOST': os.environ.get("SQL_HOST"),
-        'PORT': os.environ.get("SQL_PORT"),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ['db'],
+        'HOST': 'localhost',
+        'PORT': 5432,
+        'USER': os.environ['username'],
+        'PASSWORD': os.environ['userpass'],
     }
 }
 
@@ -132,7 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'main' / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -145,7 +144,7 @@ AUTH_USER_MODEL = 'main.AdvUser'
 EMAIL_PORT = 1025
 
 
-MEDIA_ROOT = BASE_DIR / 'mediafiles'
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 
