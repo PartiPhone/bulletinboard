@@ -15,3 +15,11 @@ img.main-image {
 img.additional-image{
     width: 180px;
 }
+
+.border-rad {
+    border-radius: 20px;
+}
+
+.color {
+    background-color: #DFEAF2;
+}

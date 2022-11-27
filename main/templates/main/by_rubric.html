@@ -9,38 +9,45 @@
 {% block content %}
 
 <h2 class="mb-2">{{ rubric }}</h2>
-<div class="container-fluid mb-2">
+<div class="container-fluid ">
     <div class="row">
         <div class="col"></div>
-        <form class="col-md-auto form-inline">
-            {% bootstrap_form form show_label=False %}
-            {% bootstrap_button content='Искать' button_type='submit' %}
+        <form class="col-auto row" >
+            <div class="col-auto">{% bootstrap_form form show_label=False%}</div>
+            <div class="col">{% bootstrap_button content='Искать' button_type='submit' %}</div>
         </form>
     </div>
 </div>
+
 {% if bbs %}
-<ul class="list-unstyled">
+<ul class="list-unstyled container-fluid ">
     {% for bb in bbs %}
-    <li class="media my-5 p-3 border">
-        {% url 'main:detail' rubric_pk=rubric.pk pk=bb.pk as url %}
-        <a href = "{{ url }}{{ all }}">
-        {% if bb.image %}
-        <img class="mr-3" src="{% thumbnail bb.image 'default' %}">
-        {% else %}
-        <img class="mr-3" src="{% static 'main/empty.jpeg' %}">
-        {% endif %}
-        </a>
-        <div class="media-body">
-            <h3><a href="{{ url }}{{ all }}">{{ bb.title }}</a></h3>
-            <div>{{ bb.content }}</div>
-            <p class="text-right font-weight-bold">{{ bb.price }}</p>
-            <p class="text-right font-italic">{{ bb.created_at }}</p>
+    <li>
+        <div  class="row border-rad color">
+             {% url 'main:detail' rubric_pk=bb.rubric.pk pk=bb.pk as url %}
+            <div class="col-auto p-3">
+                <a href = "{{ url }}" class="col">
+                {% if bb.image %}
+                <img class="mr-3 border-rad" src="{% thumbnail bb.image 'default' %}">
+                {% else %}
+                <img class="mr-3 border-rad" src="{% static 'main/empty.jpeg' %}">
+                {% endif %}
+                </a>
+            </div>
+            <div class="col p-3">
+                <h3><a href="{{ url }}">{{ bb.title }}</a></h3>
+                <div>{{ bb.content }}</div>
+                <p class="text-end font-weight-bold">{{ bb.price }}</p>
+                <p class="text-end font-italic">{{ bb.created_at }}</p>
+            </div>
         </div>
     </li>
+    <br>
     {% endfor %}
 </ul>
 {% bootstrap_pagination page url=keyword %}
 {% endif %}
+
 {% endblock %}
 
 

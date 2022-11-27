@@ -5,10 +5,11 @@
 {% block title %} {{ bb.title }} - {{ bb.rubric.name }} {% endblock %}
 
 {% block content %}
+<div class="border-rad color p-3">
 <div class="container-fluid mt-3">
     <div class="row">
         {% if bb.image %}
-        <div class="col-md-auto"><img class="main-image" 
+        <div class="col-md-auto"><img class="main-image border-rad color" 
                 src="{{ bb.image.url }}"></div>
         {% endif %}
         <div class="col">
@@ -24,11 +25,13 @@
 <div class="d-flex justify-content-between flex-wrap mt-5">
     {% for ai in ais %}
     <div>
-        <img class="additional-image" src="{{ ai.image.url }}">
+        <img class="additional-image border-pad" src="{{ ai.image.url }}">
     </div>
     {% endfor %}
 </div>
 {% endif %}
+</div>
+
 {% if comments %}
 <div class="mt-5">
     {% for comment in comments %}
