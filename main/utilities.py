@@ -10,7 +10,7 @@ signer = Signer()
 
 def send_activation_notification(user):
     if ALLOWED_HOSTS:
-        host = 'http://' + ALLOWED_HOSTS[0]
+        host = 'https://' + ALLOWED_HOSTS[0]
     else:
         host = 'http://localhost:8000'
     # sign - значение уникально идентифицирующее 
@@ -29,7 +29,7 @@ def get_timestamp_path(instance, filename):
 
 def send_new_comment_notification(comment):
     if ALLOWED_HOSTS:
-        host = 'http://' + ALLOWED_HOSTS[0]
+        host = 'https://' + ALLOWED_HOSTS[0]
     else:
         host = 'http://localhost:8000'
     author = comment.bb.author

@@ -26,8 +26,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG")
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-# ALLOWED_HOSTS.append('http://127.0.0.1:1337')
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:1337', 'http://*.localhost']
+
+CSRF_TRUSTED_ORIGINS = os.environ.get("DJANGO_TRUSTED_ORIGINS").split(" ")
 
 # Application definition
 
@@ -145,7 +145,6 @@ AUTH_USER_MODEL = 'main.AdvUser'
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
-EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
