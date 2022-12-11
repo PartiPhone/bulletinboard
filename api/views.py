@@ -18,28 +18,28 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     
-# @api_view(['GET'])
-# def bbs(request):
-    # if request.method == 'GET':
-        # bbs = Bb.objects.filter(is_active=True)[:10]
-        # serializers = BbSerializers(bbs, many=True)
-        # return Response(serializers.data)
+@api_view(['GET'])
+def bbs(request):
+    if request.method == 'GET':
+        bbs = Bb.objects.filter(is_active=True)[:10]
+        serializers = BbSerializers(bbs, many=True)
+        return Response(serializers.data)
         
-# class BbDetailView(RetrieveAPIView):
-    # queryset = Bb.objects.filter(is_active=True)
-    # serializer_class = BbDetailSerializer
+class BbDetailView(RetrieveAPIView):
+    queryset = Bb.objects.filter(is_active=True)
+    serializer_class = BbDetailSerializer
 
-# @api_view(['GET', 'POST'])
-# @permission_classes((IsAuthenticatedOrReadOnly,))
-# def comments(request, pk):
-    # if request.method == 'POST':
-        # serializer = CommentSerializer(data=request.data)
-        # if serializer.is_valid():
-            # serializer.save()
-            # return Response(serializer.data, status=HTTP_201_CREATED)
-        # else:
-            # return Response(serializer.error, status=HTTP_400_BAD_REQUEST)
-    # else:
-        # comments = Comment.objects.filter(is_active=True, bb=pk)
-        # serializer = CommentSerializer(comments, many=True)
-        # return Response(serializer.data)
+@api_view(['GET', 'POST'])
+@permission_classes((IsAuthenticatedOrReadOnly,))
+def comments(request, pk):
+    if request.method == 'POST':
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        else:
+            return Response(serializer.error, status=HTTP_400_BAD_REQUEST)
+    else:
+        comments = Comment.objects.filter(is_active=True, bb=pk)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
