@@ -86,8 +86,10 @@ def by_rubric(request, pk):
     
 def other_page(request, page):
     try:
-        print(page)
-        template = get_template('main/'+ page +'.html')
+        if page == 'robots.txt':
+            template = get_template('main/'+ page)
+        else:
+            template = get_template('main/'+ page +'.html')
     except TemplateDoesNotExist:
         raise Http404
     return HttpResponse(template.render(request=request))

@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic.base import TemplateView
 from .views import ( index, other_page, by_rubric, BBLoginView, 
             BBLogoutView, profile, ChangeUserInfo, BBPasswordChangeView, 
             RegisterUserView, RegisterDoneView, user_activate, 
@@ -40,6 +41,10 @@ urlpatterns = [
     path('accounts/profile/', profile, name='profile'),
     path('accounts/login/', BBLoginView.as_view(), name='login'),
     path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="main/robots.txt", content_type="text/plain"),
+    ),
     path('<int:pk>/', by_rubric, name='by_rubric'),
     path('<str:page>/', other_page, name='other'),
     path('', index, name='index'),
