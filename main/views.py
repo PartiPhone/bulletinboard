@@ -88,6 +88,7 @@ def other_page(request, page):
     try:
         if page == 'robots.txt':
             template = get_template('main/'+ page)
+            return HttpResponse(template.render(request=request), content_type='text/plain')
         else:
             template = get_template('main/'+ page +'.html')
     except TemplateDoesNotExist:
